@@ -4,6 +4,7 @@ const fs = require('fs');
 
 console.time("time to finish");
 
+// 1. PREPARE DATA
 const raw = fs.readFileSync('./winequality-white.csv', 'utf8').split('\n');
 const headers = raw[0].split(';').map(header => header.replace(/"/g, ''));
 
@@ -28,6 +29,7 @@ const data = raw
         }, {})
     );
 
+// 2. TRAIN THE NETWORK
 const net = new NeuralNetwork();
 const nrTrainingData = 1000;
 
@@ -42,6 +44,8 @@ console.log('trainingData: ', trainingData[0]);
 
 net.train(trainingData);
 
+
+// 3. TEST THE NETWORK
 let error = 0;
 /**
  * running neural network for 50 items
