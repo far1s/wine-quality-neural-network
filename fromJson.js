@@ -30,33 +30,15 @@ const data = raw
         }, {})
     );
 
-// 2. TRAIN THE NETWORK
+// 2. TRAIN THE NETWORK FROM JSON
 const net = new NeuralNetwork();
+net.fromJSON(
+    JSON.parse(fs.readFileSync('./net.json', 'utf8'))
+);
 const nrTrainingData = 1000;
-
-const trainingData = data
-    .slice(1, nrTrainingData)
-    .map(object => ({
-        input: _.omit(object, ['quality']),
-        output: _.pick(object, ['quality'])
-    }));
-
-console.log('trainingData: ', trainingData[0]);
-
-net.train(trainingData);
-
-
-// OPTIONAL: WRITE TRAIN RESULT TO JSON
-// Serialize the neural network as JSON to a file
-// fs.writeFileSync('./net.json', JSON.stringify(net.toJSON(), null, '  '));
 
 // 3. TEST THE NETWORK
 let error = 0;
-/**
- * running neural network for 50 items
- * taking every column as input except for quality
- * then comparing real quality with output from neural network
-*/
 for (let i = 0; i < 50; ++i) {
     const currentItem = data[nrTrainingData + i];
     const { quality } = net.run(
