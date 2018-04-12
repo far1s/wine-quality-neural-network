@@ -45,6 +45,10 @@ console.log('trainingData: ', trainingData[0]);
 net.train(trainingData);
 
 
+// OPTIONAL: WRITE RESULT TO JSON
+// Serialize the neural network as JSON to a file
+// fs.writeFileSync('./net.json', JSON.stringify(net.toJSON(), null, '  '));
+
 // 3. TEST THE NETWORK
 let error = 0;
 /**
